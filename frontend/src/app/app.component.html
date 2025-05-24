@@ -1,5 +1,42 @@
-<div class="topbar">
-  <div class="topbar-spacer"></div>
-  <button *ngIf="authService.isLoggedIn()" class="logout-btn" (click)="logout()">Kijelentkezés</button>
+<div *ngIf="authService.isLoggedIn(); else loginScreen" class="dashboard-layout">
+  <nav class="sidebar">
+    <div class="sidebar-header">
+      <div class="sidebar-logo">
+        <div class="sidebar-logo-icon">TM</div>
+        <div>
+          <div style="font-weight: 600;">TestManager</div>
+          <div style="font-size: 12px; opacity: 0.7;">v1.0.0</div>
+        </div>
+      </div>
+    </div>
+    <div class="nav-menu">
+      <a routerLink="/dashboard" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">🏠</span>
+        <span>Dashboard</span>
+      </a>
+      <a routerLink="/test-cases" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">📝</span>
+        <span>Tesztesetek</span>
+      </a>
+      <a routerLink="/new-test-case" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">✏️</span>
+        <span>Új teszteset</span>
+      </a>
+      <a routerLink="/test-report" routerLinkActive="active" class="nav-item">
+        <span class="nav-icon">📊</span>
+        <span>Jelentések</span>
+      </a>
+    </div>
+  </nav>
+  <div class="main-content">
+    <div class="topbar">
+      <div class="page-title"></div>
+      <button *ngIf="authService.isLoggedIn()" class="logout-btn" (click)="logout()">Kijelentkezés</button>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
 </div>
-<router-outlet></router-outlet>
+
+<ng-template #loginScreen>
+  <router-outlet></router-outlet>
+</ng-template>

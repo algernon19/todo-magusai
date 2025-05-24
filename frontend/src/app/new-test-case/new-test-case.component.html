@@ -1,48 +1,87 @@
-<div class="new-test-case-container">
-  <div class="content-header">
-    <button class="btn-secondary" (click)="navigateBack()">
-      ← Vissza a tesztesetekhez
-    </button>
-    <h2>Új teszteset létrehozása</h2>
+<div class="form-container">
+  <div class="form-header">
+    <h2>📝 Új teszteset létrehozása</h2>
+    <p style="opacity: 0.9; margin-top: 8px;">Töltsd ki a teszteset alapadatait és lépéseit</p>
   </div>
-  <form (ngSubmit)="save()">
-    <div>
-      <label>Title</label>
-      <input type="text" [(ngModel)]="testCase.title" name="title" required />
+
+  <form (ngSubmit)="save()" #testForm="ngForm" class="form-body">
+    <div class="form-group">
+      <label class="form-label">Teszteset címe *</label>
+      <input
+        type="text"
+        class="form-input"
+        placeholder="Adja meg a teszteset címét"
+        [(ngModel)]="testCase.title"
+        name="title"
+        required
+        [class.invalid]="testForm.submitted && !testCase.title"
+      />
     </div>
-    <div>
-      <label>Description</label>
-      <input type="text" [(ngModel)]="testCase.description" name="description" />
+
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Kategória</label>
+        <select class="form-input" [(ngModel)]="testCase.category" name="category">
+          <option value="Authentication">Authentication</option>
+          <option value="API Testing">API Testing</option>
+          <option value="UI Testing">UI Testing</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Prioritás</label>
+        <select class="form-input" [(ngModel)]="testCase.priority" name="priority">
+          <option value="Magas">Magas</option>
+          <option value="Közepes">Közepes</option>
+          <option value="Alacsony">Alacsony</option>
+        </select>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Állapot</label>
+        <select class="form-input" [(ngModel)]="testCase.status" name="status">
+          <option value="Vázlat">Vázlat</option>
+          <option value="Kész">Kész</option>
+          <option value="Elavult">Elavult</option>
+        </select>
+      </div>
     </div>
-    <div>
-      <label>Preconditions</label>
-      <input type="text" [(ngModel)]="testCase.preconditions" name="preconditions" />
+
+    <div class="form-group">
+      <label class="form-label">Leírás</label>
+      <textarea class="form-textarea" placeholder="Teszteset részletes leírása..." [(ngModel)]="testCase.description" name="description"></textarea>
     </div>
-    <div>
-      <label>Priority</label>
-      <select [(ngModel)]="testCase.priority" name="priority">
-        <option>High</option>
-        <option>Medium</option>
-        <option>Low</option>
-      </select>
+
+    <div class="form-group">
+      <label class="form-label">Előfeltételek</label>
+      <textarea class="form-textarea" placeholder="Teszteset végrehajtásának előfeltételei..." [(ngModel)]="testCase.preconditions" name="preconditions"></textarea>
     </div>
-    <div>
-      <label>Status</label>
-      <select [(ngModel)]="testCase.status" name="status">
-        <option>Draft</option>
-        <option>Tester</option>
-      </select>
+
+    <div class="steps-section">
+      <h3 style="margin-bottom: 20px; color: #111827;">🔢 Tesztlépések</h3>
+      <div *ngFor="let step of testCase.steps; let i = index" class="step-item">
+        <div class="step-header">
+          <div class="step-number">{{step.number}}</div>
+          <div class="step-controls">
+            <button type="button" class="btn-icon btn-delete" (click)="removeStep(i)">🗑️</button>
+          </div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Művelet</label>
+          <textarea class="form-textarea" [(ngModel)]="testCase.steps[i].text" name="step-{{i}}" style="min-height: 60px;"></textarea>
+        </div>
+      </div>
+      <div style="display: flex; gap: 10px; margin-top: 10px;">
+        <input type="text" class="form-input" placeholder="Új lépés leírása..." [(ngModel)]="step" name="newStep" (keyup.enter)="addStep()">
+        <button type="button" class="btn-add" (click)="addStep()">+ Új lépés</button>
+      </div>
     </div>
-    <div>
-      <label>Step Number</label>
-      <input type="number" [(ngModel)]="stepNumber" name="stepNumber" />
-      <label>Step</label>
-      <input type="text" [(ngModel)]="step" name="step" />
-      <button type="button" (click)="addStep()">+ Add Step</button>
+
+    <div *ngIf="errorMessage" class="error-message">
+      {{ errorMessage }}
     </div>
-    <ul>
-      <li *ngFor="let s of testCase.steps">{{ s.number }}. {{ s.text }}</li>
-    </ul>
-    <button type="submit">Save</button>
+
+    <div class="form-actions">
+      <button type="button" class="btn-cancel" (click)="router.navigate(['/test-cases'])">Mégse</button>
+      <button type="submit" class="btn-primary">💾 Mentés</button>
+    </div>
   </form>
 </div>

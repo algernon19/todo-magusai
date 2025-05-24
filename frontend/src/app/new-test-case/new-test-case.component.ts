@@ -11,29 +11,40 @@ export class NewTestCaseComponent {
     title: '',
     description: '',
     preconditions: '',
-    priority: 'Medium',
-    status: 'Draft',
+    category: 'Authentication',
+    priority: 'Közepes',
+    status: 'Vázlat',
     steps: [] as { number: number, text: string }[]
   };
-  stepNumber = 1;
   step = '';
+  stepNumber = 1;
+  errorMessage = '';
 
-  constructor(private router: Router) {}
+  constructor(public router: Router) {}
 
   addStep() {
-    if (this.step) {
-      this.testCase.steps.push({ number: this.stepNumber, text: this.step });
+    if (this.step.trim()) {
+      this.testCase.steps.push({ number: this.stepNumber, text: this.step.trim() });
       this.stepNumber++;
       this.step = '';
     }
   }
 
-  save() {
-    // Itt lehetne backendre küldeni vagy listához adni
-    alert('Test case saved!');
+  removeStep(index: number) {
+    this.testCase.steps.splice(index, 1);
+    // újraszámozás
+    this.testCase.steps.forEach((s, i) => s.number = i + 1);
+    this.stepNumber = this.testCase.steps.length + 1;
   }
 
-  navigateBack() {
+  save() {
+    this.errorMessage = '';
+    if (!this.testCase.title) {
+      this.errorMessage = 'A teszteset címe kötelező!';
+      return;
+    }
+    // Itt valósítsd meg a mentést (API hívás vagy service)
+    // Sikeres mentés után navigálj vissza a tesztesetekhez:
     this.router.navigate(['/test-cases']);
   }
 }
