@@ -8,8 +8,8 @@ var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 const authenticateToken = require('./middleware/authMiddleware');
 const testCaseRouter = require('./routes/testCases');
-const testStepsRouter = require('./src/routes/testSteps');
-
+const testStepsRouter = require('./routes/testSteps');
+const executionsRouter = require('./routes/executions');
 var app = express();
 
 app.use(logger('dev'));
@@ -18,8 +18,9 @@ app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
 
-app.use('/api/testcases', authenticateToken, testStepsRouter);
 
+app.use('/api/executions', authenticateToken, executionsRouter);
+app.use('/api/testcases', authenticateToken, testStepsRouter);
 app.use('/', indexRouter);
 app.use('/api/users', authenticateToken, usersRouter);
 app.use('/api/auth', authRouter);
