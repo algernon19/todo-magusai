@@ -17,5 +17,9 @@
       <button type="submit" class="btn-primary">Bejelentkezés</button>
       <div *ngIf="error" class="error" style="margin-top: 16px; color: #dc2626;">{{ error }}</div>
     </form>
+    <div style="margin-top: 16px; text-align: center;">
+      <span>Még nincs fiókod?</span>
+      <button class="btn-link" (click)="goToRegister()" style="margin-left: 8px;">Regisztráció</button>
+    </div>
   </div>
 </div>

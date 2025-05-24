@@ -1,20 +1,35 @@
 import { Injectable } from '@angular/core';
+import { HttpClient } from '@angular/common/http';
+import { Observable, tap } from 'rxjs';
 
 @Injectable({ providedIn: 'root' })
 export class AuthService {
-  login(username: string, password: string): boolean {
-    if (username === 'admin' && password === 'admin') {
-      localStorage.setItem('loggedIn', 'true');
-      return true;
-    }
-    return false;
-  }
+  private baseUrl = 'http://localhost:3000/api';
 
-  logout() {
+  constructor(private http: HttpClient) {}
+
+  login(username: string, password: string): Observable<any> {
+     return this.http.post(`${this.baseUrl}/auth/login`, { username, password }).pipe(
+       tap((res: any) => {
+         localStorage.setItem('token', res.data.token);
+         localStorage.setItem('loggedIn', 'true');
+       })
+     );
+   }
+
+  register(username: string, email: string, password: string): Observable<any> {
+    return this.http.post(`${this.baseUrl}/auth/register`, {
+      username,
+      email,
+      password
+    });
+   }
+  logout(): void {
+    localStorage.removeItem('token');
     localStorage.removeItem('loggedIn');
-  }
+   }
 
   isLoggedIn(): boolean {
-    return localStorage.getItem('loggedIn') === 'true';
+    return !!localStorage.getItem('token');
   }
 }

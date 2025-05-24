@@ -15,10 +15,19 @@ export class LoginComponent {
   constructor(private router: Router, private auth: AuthService) {}
 
   login() {
-    if (this.auth.login(this.username, this.password)) {
-      this.router.navigate(['/test-cases']);
-    } else {
-      this.error = 'Hibás felhasználónév vagy jelszó!';
-    }
+    this.auth.login(
+      this.username,
+      this.password
+    ).subscribe({
+      next: () => this.router.navigate(['/test-cases']),
+      error: (err: any) => {
+        this.error = err.error?.error || 'Hibás felhasználónév vagy jelszó!';
+      }
+    });
   }
+
+  goToRegister() {
+  this.router.navigate(['/register']);
+}
+
 }
