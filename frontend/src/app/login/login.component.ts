@@ -1,21 +1,21 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { AuthService } from '../auth.service';
 
 @Component({
   selector: 'app-login',
   templateUrl: './login.component.html',
-  styleUrls: ['./login.component.css'],
-  standalone: false
+  styleUrls: ['./login.component.css']
 })
 export class LoginComponent {
   username = '';
   password = '';
   error = '';
 
-  constructor(private router: Router) {}
+  constructor(private router: Router, private auth: AuthService) {}
 
   login() {
-    if (this.username === 'admin' && this.password === 'admin') {
+    if (this.auth.login(this.username, this.password)) {
       this.router.navigate(['/home']);
     } else {
       this.error = 'Hibás felhasználónév vagy jelszó!';
