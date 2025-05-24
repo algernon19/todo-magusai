@@ -8,6 +8,7 @@ var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 const authenticateToken = require('./middleware/authMiddleware');
 const testCaseRouter = require('./routes/testCases');
+const testStepsRouter = require('./src/routes/testSteps');
 
 var app = express();
 
@@ -16,6 +17,8 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
+app.use('/api/testcases', authenticateToken, testStepsRouter);
 
 app.use('/', indexRouter);
 app.use('/api/users', authenticateToken, usersRouter);
