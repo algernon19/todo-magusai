@@ -41,3 +41,23 @@ CREATE TABLE IF NOT EXISTS test_executions (
   comments TEXT,
   executed_at DATETIME DEFAULT CURRENT_TIMESTAMP
 );
+
+-- Alap felhasználó
+INSERT OR IGNORE INTO users (username, email, password_hash, role) VALUES
+  ('admin', 'admin@example.com', 'password', 'admin'),
+  ('tester', 'tester@example.com', 'password', 'tester'),
+  ('viewer', 'viewer@example.com', 'password', 'viewer');
+
+-- Alap teszteset
+INSERT OR IGNORE INTO test_cases (title, description, preconditions, priority, status, created_by) VALUES
+  ('Bejelentkezés teszt', 'A bejelentkezési folyamat tesztelése.', 'A felhasználó regisztrálva van.', 'high', 'ready', 1);
+
+-- Hozzá tartozó lépések
+INSERT OR IGNORE INTO test_steps (test_case_id, step_number, action, expected_result) VALUES
+  (1, 1, 'Megnyitja a bejelentkezési oldalt', 'Az oldal megjelenik'),
+  (1, 2, 'Beírja a felhasználónevet és jelszót', 'Az adatok bekerülnek a mezőkbe'),
+  (1, 3, 'Rákattint a Bejelentkezés gombra', 'Sikeres bejelentkezés történik');
+
+-- Példa végrehajtás
+INSERT OR IGNORE INTO test_executions (test_case_id, executed_by, status, actual_result, comments) VALUES
+  (1, 2, 'pass', 'Sikeres bejelentkezés történt', 'Minden rendben ment');

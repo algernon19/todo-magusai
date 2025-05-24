@@ -27,6 +27,14 @@ services:
     depends_on:
       - frontend
       - backend
+
+  mailhog:
+    image: mailhog/mailhog
+    ports:
+      - "1025:1025"   # SMTP (küldéshez)
+      - "8025:8025"   # Web UI
+    restart: always
+
 volumes:
   backend_node_modules:
   frontend_node_modules:
