@@ -16,7 +16,7 @@ export class LoginComponent {
 
   login() {
     if (this.auth.login(this.username, this.password)) {
-      this.router.navigate(['/home']);
+      this.router.navigate(['/test-cases']);
     } else {
       this.error = 'Hibás felhasználónév vagy jelszó!';
     }
