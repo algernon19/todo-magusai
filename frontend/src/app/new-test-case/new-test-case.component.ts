@@ -1,5 +1,7 @@
 import { Component } from '@angular/core';
 import { Router } from '@angular/router';
+import { HttpClient } from '@angular/common/http';
+import { HttpErrorResponse } from '@angular/common/http';
 
 @Component({
   selector: 'app-new-test-case',
@@ -20,7 +22,9 @@ export class NewTestCaseComponent {
   stepNumber = 1;
   errorMessage = '';
 
-  constructor(public router: Router) {}
+  saving = false;
+
+  constructor(private http: HttpClient, public router: Router) {}
 
   addStep() {
     if (this.step.trim()) {
@@ -39,12 +43,21 @@ export class NewTestCaseComponent {
 
   save() {
     this.errorMessage = '';
-    if (!this.testCase.title) {
+    if (!this.testCase.title.trim()) {
       this.errorMessage = 'A teszteset címe kötelező!';
       return;
     }
-    // Itt valósítsd meg a mentést (API hívás vagy service)
-    // Sikeres mentés után navigálj vissza a tesztesetekhez:
-    this.router.navigate(['/test-cases']);
+
+    this.saving = true;
+
+    this.http.post('/api/testcases', this.testCase).subscribe({
+      next: () => {
+        this.router.navigate(['/test-cases']);
+      },
+      error: (err: HttpErrorResponse) => {
+        this.errorMessage = 'Hiba történt: ' + (err.error?.message || err.message);
+        this.saving = false;
+      }
+    });
   }
 }
