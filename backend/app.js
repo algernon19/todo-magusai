@@ -10,6 +10,7 @@ const authenticateToken = require('./middleware/authMiddleware');
 const testCaseRouter = require('./routes/testCases');
 const testStepsRouter = require('./routes/testSteps');
 const executionsRouter = require('./routes/executions');
+const reportsRouter = require('./routes/reports');
 var app = express();
 
 app.use(logger('dev'));
@@ -19,6 +20,8 @@ app.use(cookieParser());
 
 
 
+
+app.use('/api/reports', authenticateToken, reportsRouter);
 app.use('/api/executions', authenticateToken, executionsRouter);
 app.use('/api/testcases', authenticateToken, testStepsRouter);
 app.use('/', indexRouter);
