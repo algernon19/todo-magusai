@@ -2,6 +2,8 @@
   <h2>Teszt Riportok</h2>
 </div>
 <div class="test-report-container">
-  <button (click)="download('xml')">Download XML</button>
-  <button (click)="download('csv')">Download CSV</button>
+  <div style="margin-top: 24px; display: flex; gap: 16px;">
+    <button class="btn-primary" (click)="exportXml()">📄 Export XML</button>
+    <button class="btn-primary" (click)="exportExcel()">📊 Export Excel</button>
+  </div>
 </div>
