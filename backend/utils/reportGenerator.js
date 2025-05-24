@@ -4,6 +4,13 @@ const path = require('path');
 const xlsx = require('xlsx');
 const { create } = require('xmlbuilder2');
 
+function ensureReportsDir() {
+  const reportsDir = path.join(__dirname, '../../reports');
+  if (!fs.existsSync(reportsDir)) {
+    fs.mkdirSync(reportsDir, { recursive: true });
+  }
+}
+
 function generateExcel(callback) {
   const query = `
     SELECT tc.id, tc.title, tc.description, te.status, te.actual_result
@@ -13,6 +20,8 @@ function generateExcel(callback) {
 
   db.all(query, [], (err, rows) => {
     if (err) return callback(err);
+
+    ensureReportsDir();
 
     const worksheet = xlsx.utils.json_to_sheet(rows);
     const workbook = xlsx.utils.book_new();
@@ -34,6 +43,8 @@ function generateXml(callback) {
 
   db.all(query, [], (err, rows) => {
     if (err) return callback(err);
+
+    ensureReportsDir();
 
     const root = create({ version: '1.0' }).ele('TestReport');
     rows.forEach(row => {
