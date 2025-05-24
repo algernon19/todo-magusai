@@ -19,4 +19,8 @@ export class TestCaseListComponent {
   navigateToNew() {
     this.router.navigate(['/new-test-case']);
   }
+
+  navigateToReport() {
+    this.router.navigate(['/test-report']);
+  }
 }

@@ -1,4 +1,5 @@
 import { Component } from '@angular/core';
+import { Router } from '@angular/router';
 
 @Component({
   selector: 'app-new-test-case',
@@ -17,6 +18,8 @@ export class NewTestCaseComponent {
   stepNumber = 1;
   step = '';
 
+  constructor(private router: Router) {}
+
   addStep() {
     if (this.step) {
       this.testCase.steps.push({ number: this.stepNumber, text: this.step });
@@ -28,5 +31,9 @@ export class NewTestCaseComponent {
   save() {
     // Itt lehetne backendre küldeni vagy listához adni
     alert('Test case saved!');
+  }
+
+  navigateBack() {
+    this.router.navigate(['/test-cases']);
   }
 }

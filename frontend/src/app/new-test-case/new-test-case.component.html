@@ -1,5 +1,10 @@
 <div class="new-test-case-container">
-  <h2>New Test Case</h2>
+  <div class="content-header">
+    <button class="btn-secondary" (click)="navigateBack()">
+      ← Vissza a tesztesetekhez
+    </button>
+    <h2>Új teszteset létrehozása</h2>
+  </div>
   <form (ngSubmit)="save()">
     <div>
       <label>Title</label>

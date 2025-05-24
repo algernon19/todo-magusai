@@ -341,18 +341,19 @@ body {
 }
 
 .btn-secondary {
-	background: white;
-	border: 2px solid #e5e7eb;
-	color: #374151;
-	padding: 10px 20px;
-	border-radius: 8px;
-	cursor: pointer;
-	transition: all 0.2s;
+  background: white;
+  border: 2px solid #e5e7eb;
+  color: #374151;
+  padding: 10px 20px;
+  border-radius: 8px;
+  cursor: pointer;
+  font-weight: 600;
+  font-size: 15px;
+  transition: all 0.2s;
 }
-
 .btn-secondary:hover {
-	border-color: #667eea;
-	color: #667eea;
+  border-color: #667eea;
+  color: #667eea;
 }
 
 .search-filters {
@@ -568,6 +569,23 @@ body {
 	padding: 12px 24px;
 	border-radius: 8px;
 	cursor: pointer;
+}
+
+/* Globális kijelentkezés gomb stílus */
+.logout-btn {
+  background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+  color: #fff;
+  border: none;
+  border-radius: 8px;
+  padding: 10px 22px;
+  font-weight: 600;
+  font-size: 15px;
+  cursor: pointer;
+  transition: background 0.2s;
+  box-shadow: 0 2px 8px rgba(102,126,234,0.08);
+}
+.logout-btn:hover {
+  background: linear-gradient(135deg, #5a67d8 0%, #6d28d9 100%);
 }
 
 /* Responsive */
