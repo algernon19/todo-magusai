@@ -22,7 +22,6 @@ export class TestCaseListComponent implements OnInit {
     this.loading = true;
     this.testCaseService.getAllTestCases().subscribe({
       next: (res) => {
-        // Ha res.data létezik, akkor azt add át!
         this.testCases = res.data || [];
         this.loading = false;
       },
@@ -41,7 +40,25 @@ export class TestCaseListComponent implements OnInit {
     this.router.navigate(['/test-report']);
   }
 
-  navigateToDetail(id?: number) {
-    this.router.navigate(['/test-cases', id]);
+  // Szerkesztés gomb: navigálás a részletező oldalra
+  editTestCase(id?: number) {
+    if (id) {
+      this.router.navigate(['/test-cases', id]);
+    }
+  }
+
+  // Törlés gomb: teszteset törlése és lista frissítése
+  deleteTestCase(id?: number) {
+    if (!id) return;
+    if (confirm('Biztosan törölni szeretnéd ezt a tesztesetet?')) {
+      this.testCaseService.deleteTestCase(id).subscribe({
+        next: () => {
+          this.fetchTestCases();
+        },
+        error: () => {
+          this.error = 'Nem sikerült törölni a tesztesetet.';
+        }
+      });
+    }
   }
 }

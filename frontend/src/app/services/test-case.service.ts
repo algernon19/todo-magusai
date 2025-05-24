@@ -64,4 +64,10 @@ export class TestCaseService {
     const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : undefined;
     return this.http.get<any>(`${this.baseUrl}/testcases/${testCaseId}/steps`, { headers });
   }
+
+  deleteTestCase(id: number) {
+    const token = localStorage.getItem('token');
+    const headers = token ? new HttpHeaders({ Authorization: `Bearer ${token}` }) : undefined;
+    return this.http.delete(`${this.baseUrl}/testcases/${id}`, { headers });
+  }
 }

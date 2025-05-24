@@ -1,22 +1,85 @@
-<div class="test-case-list-container">
-  <h2>Test Cases</h2>
-  <button class="new-test-btn" (click)="navigateToNew()">New Test Case</button>
-  <table>
-    <thead>
-      <tr>
-        <th>Title</th>
-        <th>Priority</th>
-        <th>Status</th>
-        <th>Created at</th>
-      </tr>
-    </thead>
-    <tbody>
-      <tr *ngFor="let test of testCases" (click)="navigateToDetail(test.id)" style="cursor:pointer;">
-        <td>{{ test.title }}</td>
-        <td>{{ test.priority }}</td>
-        <td>{{ test.status }}</td>
-        <td>{{ test.created_at | date:'yyyy.MM.dd HH:mm' }}</td>
-      </tr>
-    </tbody>
-  </table>
+<div class="content-header">
+  <h2 style="color: #111827;">Tesztesetek kezelése</h2>
+  <button class="btn-primary" style="width: auto; margin-left: 20px;" (click)="navigateToNew()">+ Új teszteset</button>
+</div>
+
+<div class="search-filters" style="display: flex; gap: 15px; margin-bottom: 25px;">
+  <input type="text" class="search-input" placeholder="🔍 Keresés tesztesetek között...">
+  <select class="filter-select">
+    <option>📂 Összes kategória</option>
+    <option>Authentication</option>
+    <option>API Testing</option>
+    <option>UI Testing</option>
+  </select>
+  <select class="filter-select">
+    <option>⚠️ Összes prioritás</option>
+    <option>Magas</option>
+    <option>Közepes</option>
+    <option>Alacsony</option>
+  </select>
+  <select class="filter-select">
+    <option>📊 Összes állapot</option>
+    <option>Vázlat</option>
+    <option>Kész</option>
+    <option>Elavult</option>
+  </select>
+</div>
+
+<div class="data-table" style="background: white; border-radius: 12px; box-shadow: 0 4px 6px rgba(0,0,0,0.05); padding: 0 0 10px 0;">
+  <div class="table-header" style="display: grid; grid-template-columns: 60px 1fr 120px 100px 100px 80px; gap: 20px; padding: 20px 25px; border-bottom: 1px solid #e5e7eb; color: #6b7280; font-weight: 600;">
+    <div>ID</div>
+    <div>Teszteset címe</div>
+    <div>Kategória</div>
+    <div>Prioritás</div>
+    <div>Állapot</div>
+    <div>Műveletek</div>
+  </div>
+  <ng-container *ngIf="!loading && testCases.length; else noCases">
+    <div *ngFor="let test of testCases" class="table-row"
+      style="display: grid; grid-template-columns: 60px 1fr 120px 100px 100px 80px; gap: 20px; align-items: center; padding: 18px 25px; border-bottom: 1px solid #f3f4f6; cursor: pointer; transition: background 0.15s;"
+      (click)="editTestCase(test.id); $event.stopPropagation();"
+      onmouseover="this.style.background='#f8fafc';"
+      onmouseout="this.style.background='white';"
+    >
+      <div style="font-weight: 600; display: flex; align-items: center; gap: 8px;">
+        #{{ test.id }}
+      </div>
+      <div>
+        <div style="font-weight: 600; margin-bottom: 4px; display: flex; align-items: center; gap: 8px;">
+          {{ test.title }}
+        </div>
+        <div style="font-size: 12px; color: #6b7280;">{{ test.description }}</div>
+      </div>
+      <div>{{ test.category || '-' }}</div>
+      <div>
+        <span [ngClass]="{
+          'priority-high': test.priority === 'Magas' || test.priority === 'high',
+          'priority-medium': test.priority === 'Közepes' || test.priority === 'medium',
+          'priority-low': test.priority === 'Alacsony' || test.priority === 'low'
+        }" style="padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+          {{ test.priority }}
+        </span>
+      </div>
+      <div>
+        <span [ngClass]="{
+          'status-badge': true,
+          'status-draft': test.status === 'Vázlat' || test.status === 'draft',
+          'status-ready': test.status === 'Kész' || test.status === 'ready',
+          'status-obsolete': test.status === 'Elavult' || test.status === 'obsolete'
+        }" style="padding: 2px 8px; border-radius: 12px; font-size: 12px; font-weight: 600;">
+          {{ test.status }}
+        </span>
+      </div>
+      <div style="display: flex; gap: 5px;">
+        <button class="btn-icon btn-move" title="Szerkesztés" (click)="editTestCase(test.id); $event.stopPropagation();">✏️</button>
+        <button class="btn-icon btn-delete" title="Törlés" (click)="deleteTestCase(test.id); $event.stopPropagation();">🗑️</button>
+      </div>
+    </div>
+  </ng-container>
+  <ng-template #noCases>
+    <div style="padding: 30px; color: #6b7280; text-align: center;">
+      <span *ngIf="!loading">Nincs még teszteset.</span>
+      <span *ngIf="loading">Betöltés...</span>
+    </div>
+  </ng-template>
 </div>
