@@ -44,3 +44,4 @@ Copy
 Edit
 ng serve
 Az alkalmazás elérhető lesz a http://localhost:4200 címen.
+
