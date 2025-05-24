@@ -1,18 +1,21 @@
-<div class="login-container">
-  <h2>Login</h2>
-  <form (ngSubmit)="login()">
-    <div>
-      <label>Username</label>
-      <input type="text" [(ngModel)]="username" name="username" required />
+<div class="login-screen">
+  <div class="login-card">
+    <div class="logo">
+      <div class="logo-icon">TM</div>
+      <h2 style="color: #111827; margin-bottom: 8px;">Tesztmenedzsment</h2>
+      <p style="color: #6b7280;" id="auth-subtitle">Jelentkezzen be a fiókjába</p>
     </div>
-    <div>
-      <label>Password</label>
-      <input type="password" [(ngModel)]="password" name="password" required />
-    </div>
-    <button type="submit">Login</button>
-    <div *ngIf="error" class="error">{{ error }}</div>
-  </form>
-  <div class="register-link">
-    No account? <a href="#">Register here</a>
+    <form (ngSubmit)="login()" autocomplete="off">
+      <div class="form-group">
+        <label class="form-label">📧 Email cím</label>
+        <input type="text" class="form-input" placeholder="pelda@email.com" [(ngModel)]="username" name="username" required>
+      </div>
+      <div class="form-group">
+        <label class="form-label">🔒 Jelszó</label>
+        <input type="password" class="form-input" placeholder="••••••••" [(ngModel)]="password" name="password" required>
+      </div>
+      <button type="submit" class="btn-primary">Bejelentkezés</button>
+      <div *ngIf="error" class="error" style="margin-top: 16px; color: #dc2626;">{{ error }}</div>
+    </form>
   </div>
 </div>

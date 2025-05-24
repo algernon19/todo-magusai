@@ -1,1 +1,5 @@
+<div class="topbar">
+  <div class="topbar-spacer"></div>
+  <button *ngIf="authService.isLoggedIn()" class="logout-btn" (click)="logout()">Kijelentkezés</button>
+</div>
 <router-outlet></router-outlet>
