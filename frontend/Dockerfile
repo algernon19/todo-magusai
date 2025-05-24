@@ -1,7 +1,7 @@
 FROM node:18
 
 # CLI telepítése globálisan
-RUN npm install -g @angular/cli
+RUN npm install -g @angular/cli@16
 
 # Projektmappa létrehozása
 WORKDIR /app
@@ -10,7 +10,7 @@ WORKDIR /app
 COPY package*.json .
 
 # Függőségek telepítése
-RUN npm install
+RUN npm install --legacy-peer-deps
 
 # Forráskód bemásolása
 COPY . .
