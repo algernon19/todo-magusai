@@ -1,1 +1,56 @@
-<p>test-case-detail works!</p>
+<div class="form-container" *ngIf="!loading && testCase">
+  <div class="form-header">
+    <h2>📝 Teszteset részletei</h2>
+    <p style="opacity: 0.9; margin-top: 8px;">Az alábbiakban láthatók a teszteset adatai és lépései</p>
+  </div>
+  <div class="form-body">
+    <div class="form-group">
+      <label class="form-label">Cím</label>
+      <div class="form-value">{{ testCase.title }}</div>
+    </div>
+    <div class="form-row">
+      <div class="form-group">
+        <label class="form-label">Kategória</label>
+        <div class="form-value">{{ testCase.category }}</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Prioritás</label>
+        <div class="form-value">{{ testCase.priority }}</div>
+      </div>
+      <div class="form-group">
+        <label class="form-label">Állapot</label>
+        <div class="form-value">{{ testCase.status }}</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Leírás</label>
+      <div class="form-value">{{ testCase.description }}</div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Előfeltételek</label>
+      <div class="form-value">{{ testCase.preconditions }}</div>
+    </div>
+    <div class="steps-section">
+      <h3 style="margin-bottom: 20px; color: #111827;">🔢 Tesztlépések</h3>
+      <div *ngFor="let step of steps; let i = index" class="step-item">
+        <div class="step-header">
+          <div class="step-number">{{ i + 1 }}</div>
+        </div>
+        <div class="form-group">
+          <label class="form-label">Művelet</label>
+          <div class="form-value">{{ step.action }}</div>
+        </div>
+        <div class="form-group" *ngIf="step.expected_result">
+          <label class="form-label">Várt eredmény</label>
+          <div class="form-value">{{ step.expected_result }}</div>
+        </div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label class="form-label">Létrehozva</label>
+      <div class="form-value">{{ testCase.created_at | date:'yyyy.MM.dd HH:mm' }}</div>
+    </div>
+  </div>
+</div>
+<div *ngIf="loading" class="form-container">Betöltés...</div>
+<div *ngIf="error" class="form-container" style="color: #dc2626;">{{ error }}</div>

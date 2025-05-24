@@ -11,11 +11,11 @@
       </tr>
     </thead>
     <tbody>
-      <tr *ngFor="let test of testCases">
+      <tr *ngFor="let test of testCases" (click)="navigateToDetail(test.id)" style="cursor:pointer;">
         <td>{{ test.title }}</td>
         <td>{{ test.priority }}</td>
         <td>{{ test.status }}</td>
-        <td>{{ test.createdAt }}</td>
+        <td>{{ test.created_at | date:'yyyy.MM.dd HH:mm' }}</td>
       </tr>
     </tbody>
   </table>
