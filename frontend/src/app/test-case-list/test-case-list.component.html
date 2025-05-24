@@ -1,0 +1,22 @@
+<div class="test-case-list-container">
+  <h2>Test Cases</h2>
+  <button class="new-test-btn" (click)="navigateToNew()">New Test Case</button>
+  <table>
+    <thead>
+      <tr>
+        <th>Title</th>
+        <th>Priority</th>
+        <th>Status</th>
+        <th>Created at</th>
+      </tr>
+    </thead>
+    <tbody>
+      <tr *ngFor="let test of testCases">
+        <td>{{ test.title }}</td>
+        <td>{{ test.priority }}</td>
+        <td>{{ test.status }}</td>
+        <td>{{ test.createdAt }}</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
