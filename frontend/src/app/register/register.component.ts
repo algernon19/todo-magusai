@@ -29,7 +29,7 @@ export class RegisterComponent {
       this.email,
       this.password
     ).subscribe({
-      next: () => this.router.navigate(['/login']),
+      next: () => this.router.navigate(['/']),
       error: (err: any) => {
         this.error = err.error?.error || 'A regisztráció sikertelen';
       }
