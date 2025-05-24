@@ -1,0 +1,43 @@
+<div class="new-test-case-container">
+  <h2>New Test Case</h2>
+  <form (ngSubmit)="save()">
+    <div>
+      <label>Title</label>
+      <input type="text" [(ngModel)]="testCase.title" name="title" required />
+    </div>
+    <div>
+      <label>Description</label>
+      <input type="text" [(ngModel)]="testCase.description" name="description" />
+    </div>
+    <div>
+      <label>Preconditions</label>
+      <input type="text" [(ngModel)]="testCase.preconditions" name="preconditions" />
+    </div>
+    <div>
+      <label>Priority</label>
+      <select [(ngModel)]="testCase.priority" name="priority">
+        <option>High</option>
+        <option>Medium</option>
+        <option>Low</option>
+      </select>
+    </div>
+    <div>
+      <label>Status</label>
+      <select [(ngModel)]="testCase.status" name="status">
+        <option>Draft</option>
+        <option>Tester</option>
+      </select>
+    </div>
+    <div>
+      <label>Step Number</label>
+      <input type="number" [(ngModel)]="stepNumber" name="stepNumber" />
+      <label>Step</label>
+      <input type="text" [(ngModel)]="step" name="step" />
+      <button type="button" (click)="addStep()">+ Add Step</button>
+    </div>
+    <ul>
+      <li *ngFor="let s of testCase.steps">{{ s.number }}. {{ s.text }}</li>
+    </ul>
+    <button type="submit">Save</button>
+  </form>
+</div>
