@@ -7,7 +7,7 @@ var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 var authRouter = require('./routes/auth');
 const authenticateToken = require('./middleware/authMiddleware');
-
+const testCaseRouter = require('./routes/testCases');
 
 var app = express();
 
@@ -16,8 +16,10 @@ app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
 
+
 app.use('/', indexRouter);
 app.use('/api/users', authenticateToken, usersRouter);
 app.use('/api/auth', authRouter);
+app.use('/api/testcases', testCaseRouter);
 
 module.exports = app;
